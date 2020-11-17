@@ -1,4 +1,5 @@
 import pygame
+import math
 import random
 
 #initilize the pygame
@@ -23,11 +24,11 @@ playerImg = pygame.image.load('001-spaceship.png')
 playerX = 370
 playerY = 480
 playerX_change = 0
-speed = 0.3 #rate of change pos
+speed = 0.5 #rate of change pos
 
 #enemy
 enemyImg = pygame.image.load('ufo.png')
-enemyX = random.randint(0,800)
+enemyX = random.randint(100,700)
 enemyY = random.randint(50,150)
 enemyX_change = 0.3
 enemyY_change = 40
@@ -40,6 +41,8 @@ laserX_change = 0
 laserY_change = 2
 laser_state = "ready" #you cant see the bullet on screan (fire state means its moving)
 
+score = 0
+
 def fire_laser(x,y):
     global laser_state
     laser_state = "fire"
@@ -50,6 +53,13 @@ def player(x, y):
 
 def enemy(x, y):
     screen.blit(enemyImg, (x, y))
+
+def isCollision(enemyX, enemyY, laserX, laserY):
+    distance = math.sqrt((enemyX - laserX)**2 + (enemyY - laserY)**2)
+    if distance < 27:
+        return True
+    else:
+        return False
 
 # the game loop (keeps window open until we quit) 
 running = True
@@ -102,6 +112,16 @@ while running:
     if laserY <= 0:
         laserY = 480
         laser_state = "ready"
+
+    # Collision
+    collision = isCollision(enemyX, enemyY, laserX, laserY)
+    if collision:
+        laserY = 480
+        laser_state = "ready"
+        score += 10
+        enemyX = random.randint(100,700)
+        enemyY = random.randint(50,150)
+        print(score)
 
     enemy(enemyX, enemyY)
     player(playerX, playerY) #player called after screen as player must be on top of screen.
