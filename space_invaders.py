@@ -1,12 +1,16 @@
 import pygame
 import math
 import random
+from pygame import mixer
 
 #initilize the pygame
 pygame.init()
 
 #create screen
 screen = pygame.display.set_mode((800,600)) #((width,height))
+
+mixer.music.load('background.wav')
+mixer.music.play(-1)
 
 # make a fullscreen:
 #screen = pygame.display.set_mode((0,0))
@@ -49,7 +53,16 @@ laserX_change = 0
 laserY_change = 2
 laser_state = "ready" #you cant see the bullet on screan (fire state means its moving)
 
-score = 0
+#score
+score_value = 0
+font = pygame.font.Font('freesansbold.ttf', 32)
+
+textX = 10
+textY = 10
+
+def show_score(x, y):
+    score = font.render("Score: " + str(score_value), True, (255,255,255))
+    screen.blit(score, (x, y))
 
 def fire_laser(x,y):
     global laser_state
@@ -118,17 +131,13 @@ while running:
         if collision:
             laserY = 480
             laser_state = "ready"
-            score += 5 + random.randint(0,10)
-            print(score)
+            score_value += 5 + random.randint(0,10)
             enemyX[i] = random.randint(100,700)
             enemyY[i] = random.randint(50,150)
 
         enemy(enemyX[i], enemyY[i], i)
 
-
-   
-   
-    #bullet move
+    #laser move
     if laser_state is "fire":
         fire_laser(laserX, laserY)
         laserY -= laserY_change
@@ -137,5 +146,7 @@ while running:
         laserY = 480
         laser_state = "ready"
     
+    show_score(textX, textY)
+
     player(playerX, playerY) #player called after screen as player must be on top of screen.
     pygame.display.update()
