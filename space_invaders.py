@@ -57,12 +57,20 @@ laser_state = "ready" #you cant see the bullet on screan (fire state means its m
 score_value = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
 
+#game over text
+over_font = pygame.font.Font('freesansbold.ttf', 64)
+
 textX = 10
 textY = 10
 
 def show_score(x, y):
     score = font.render("Score: " + str(score_value), True, (255,255,255))
     screen.blit(score, (x, y))
+
+def game_over_text():
+    over_text = over_font.render("Game Over", True, (255,255,255))
+    screen.blit(over_text, (200, 250))
+
 
 def fire_laser(x,y):
     global laser_state
@@ -101,6 +109,8 @@ while running:
             if event.key == pygame.K_SPACE:
                 if laser_state == "ready":
                     fire_laser(playerX, laserY)
+                    laser_sound = mixer.Sound('laser.wav')
+                    laser_sound.play()
                     laserX = playerX
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -119,6 +129,14 @@ while running:
     
     #bounds of enemy
     for i in range(num_of_enemies):
+
+        # game over
+        if enemyY[i] > 440:
+            for j in range(num_of_enemies):
+                enemyY[j] = 2000
+            game_over_text()
+            break
+
         enemyX[i] += enemyX_change[i]
         if enemyX[i] <= 0:
             enemyX_change[i] = 0.3
@@ -131,9 +149,12 @@ while running:
         if collision:
             laserY = 480
             laser_state = "ready"
-            score_value += 5 + random.randint(0,10)
+            score_value += 8 + random.randint(0,4)
             enemyX[i] = random.randint(100,700)
             enemyY[i] = random.randint(50,150)
+            explosion_sound = mixer.Sound('explosion.wav')
+            explosion_sound.play()
+                    
 
         enemy(enemyX[i], enemyY[i], i)
 
