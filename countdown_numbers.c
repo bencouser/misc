@@ -1,14 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void findSolution(int chosen_numbers[6], int target_number){
+
+  //int char[] = ('+', '-', '*', '/')
+  int distanceFromTarget;
+  int i;
+  
+  for(i = 0; i < 6; i++){
+    printf("%d", chosen_numbers[i]);
+  }
+
+}
+
 int main(){
 
   int target;
   int chose_numbers[6];
-  int loop;
+  int i;
   int proof = 0;
-  // using numbers to corrispond to operations
-  int operations[] = {1, 2, 3, 4};
 
   while(proof == 0){
     // asking user for the input numbers and target
@@ -29,12 +39,13 @@ int main(){
 
     // letting user proof read their numbers
     printf("Your numbers are: ");
-    for(loop = 0; loop < 6; loop++)
-      printf("%d ", chose_numbers[loop]);
+    for(i = 0; i < 6; i++)
+      printf("%d ", chose_numbers[i]);
     printf("\nWith a target of %d\n", target);
+    // giving option to redo the setup process 
     printf("Is this correct (1 = yes, 0 = no)? \n"); // would prefer y/n
     scanf("%d", &proof);
   }
-
+ 
   return 0;
 }
