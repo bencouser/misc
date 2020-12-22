@@ -3,12 +3,36 @@
 
 void findSolution(int chosen_numbers[6], int target_number){
 
-  //int char[] = ('+', '-', '*', '/')
-  int distanceFromTarget;
+  int currentDistance = 1000;
   int i;
-  
-  for(i = 0; i < 6; i++){
-    printf("%d", chosen_numbers[i]);
+  int j;
+  int sum;
+
+  for(i=0; i<6; i++){
+    if(currentDistance == 0){
+      break;
+    }
+    for(j=i; j<6; j++){
+      sum = chosen_numbers[i] + chosen_numbers[j];
+      currentDistance = abs(sum - target_number);
+      if(currentDistance == 0){
+        printf("Solution found with %d + %d\n", chosen_numbers[i], chosen_numbers[j]);
+        break;
+      }
+    }
+  }
+  for(i=0; i<6; i++){
+    if(currentDistance == 0){
+      break;
+    }
+    for(j=i; j<6; j++){
+      sum = chosen_numbers[i] * chosen_numbers[j];
+      currentDistance = abs(sum - target_number);
+      if(currentDistance == 0){
+        printf("Solution found with %d x %d\n", chosen_numbers[i], chosen_numbers[j]);
+        break;
+      }
+    }
   }
 
 }
@@ -46,6 +70,9 @@ int main(){
     printf("Is this correct (1 = yes, 0 = no)? \n"); // would prefer y/n
     scanf("%d", &proof);
   }
+
+  findSolution(chose_numbers, target);
  
   return 0;
+
 }
