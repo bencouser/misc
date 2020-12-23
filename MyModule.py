@@ -2,7 +2,7 @@ import math
 
 
 # Function takes an int
-# Returns a list of the ints factors including itself
+# Returns a list of the ints factors including itself as floats
 def get_factors(number):
     half_factors = []
     factors = []
@@ -39,3 +39,12 @@ def find_digits(number):
 def is_it_palindromic(number):
     digit = find_digits(number)
     return digit == digit[::-1]
+
+
+# Function takes a positive integer
+# Returns the factorial of the input as an int
+def find_factorial(number):
+    factorial = 1
+    for i in range(2, number+1):
+        factorial *= i
+    return factorial
