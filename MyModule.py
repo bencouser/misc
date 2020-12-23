@@ -48,3 +48,14 @@ def find_factorial(number):
     for i in range(2, number+1):
         factorial *= i
     return factorial
+
+
+# Function takes a list of digits
+# Returns all circular permutations as list of a list
+def find_circular_perms(digits):
+    all_perms = []
+    all_perms.append(digits)
+    for i in range(len(digits)-1):
+        new_perm = digits[i+1:] + digits[:i+1]
+        all_perms.append(new_perm)
+    return all_perms
