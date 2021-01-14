@@ -34,6 +34,13 @@ def find_digits(number):
     return digits
 
 
+# Function takes list of digits
+# Returns a single int with corresponding digits
+def find_number(digits):
+    number = int("".join(map(str, list)))
+    return number
+
+
 # Function takes a positive integer
 # Returns True if palindromic
 def is_it_palindromic(number):
